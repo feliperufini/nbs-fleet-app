@@ -8,9 +8,10 @@ import theme from './src/theme'
 
 import { REALM_APP_ID } from '@env'
 
+import { RealmProvider } from './src/libs/realm'
+import { Routes } from './src/routes'
 import { Loading } from './src/components/Loading'
 import { SignIn } from './src/screens/SignIn'
-import { Routes } from './src/routes'
 
 export default function App() {
 	const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold })
@@ -22,14 +23,16 @@ export default function App() {
 	return (
 		<AppProvider id={REALM_APP_ID}>
 			<ThemeProvider theme={theme}>
-				<SafeAreaProvider>
+				<SafeAreaProvider style={{ flex: 1, backgroundColor: theme.colors.gray[800] }}>
 					<StatusBar
 						barStyle="light-content"
 						backgroundColor="transparent"
 						translucent
 					/>
 					<UserProvider fallback={SignIn}>
-						<Routes />
+						<RealmProvider>
+							<Routes />
+						</RealmProvider>
 					</UserProvider>
 				</SafeAreaProvider>
 			</ThemeProvider>
