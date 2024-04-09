@@ -3,5 +3,5 @@ import theme from '../../theme'
 
 export const Container = styled.View`
 	flex: 1;
-	background-color: ${theme.colors.brandLight};
+	background-color: ${theme.colors.gray[800]};
 `
