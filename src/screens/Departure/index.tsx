@@ -1,10 +1,13 @@
 import { useRef } from 'react'
-import { TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
+import {
+	TextInput, ScrollView, KeyboardAvoidingView, Platform,
+} from 'react-native'
 
 import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { LicensePlateInput } from '../../components/LicensePlateInput'
 import { TextAreaInput } from '../../components/TextAreaInput'
+
 import { Container, Content } from './styles'
 
 const keyboardAvoidingViewBehavior = Platform.OS === 'android' ? 'height' : 'position'
@@ -19,7 +22,10 @@ export function Departure() {
 	return (
 		<Container>
 			<Header title="Saída" />
-			<KeyboardAvoidingView style={{ flex: 1 }} behavior={keyboardAvoidingViewBehavior}>
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior={keyboardAvoidingViewBehavior}
+			>
 				<ScrollView>
 					<Content>
 						<LicensePlateInput
