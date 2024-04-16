@@ -30,5 +30,5 @@ export const Name = styled.Text`
 export const Picture = styled(Image)`
   width: 54px;
   height: 54px;
-  border-radius: 7px;
+  border-radius: 6px;
 `

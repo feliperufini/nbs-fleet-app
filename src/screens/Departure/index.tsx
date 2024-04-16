@@ -1,8 +1,6 @@
 import { useRef, useState } from 'react'
-import {
-  TextInput, ScrollView, KeyboardAvoidingView, Platform,
-  Alert,
-} from 'react-native'
+import { TextInput, ScrollView, Alert } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
@@ -17,8 +15,6 @@ import { useUser } from '@realm/react'
 import { useRealm } from '../../libs/realm'
 import { Historic } from '../../libs/realm/schemas/Historic'
 
-const keyboardAvoidingViewBehavior = Platform.OS === 'android' ? 'height' : 'position'
-
 export function Departure() {
   const [description, setDescription] = useState('')
   const [licensePlate, setLicensePlate] = useState('')
@@ -31,7 +27,6 @@ export function Departure() {
   const descriptionRef = useRef<TextInput>(null)
 
   function handleDepartureRegister() {
-    setIsRegistering(true)
     try {
       if (!validateLicensePlate(licensePlate)) {
         return Alert.alert('Placa do veículo', 'A placa é inválida, por favor, informe uma placa correta.')
@@ -40,6 +35,8 @@ export function Departure() {
       if (description.trim().length === 0) {
         return Alert.alert('Finalidade', 'Por favor, informe a finalidade da utilização do veículo.')
       }
+
+      setIsRegistering(true)
 
       realm.write(() => {
         realm.create('Historic', Historic.generate({
@@ -61,10 +58,7 @@ export function Departure() {
   return (
     <Container>
       <Header title="Saída" />
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={keyboardAvoidingViewBehavior}
-      >
+      <KeyboardAwareScrollView extraHeight={100}>
         <ScrollView>
           <Content>
             <LicensePlateInput
@@ -91,7 +85,7 @@ export function Departure() {
             />
           </Content>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </Container>
   )
 }

@@ -1,6 +1,7 @@
 export default {
   colors: {
     white: '#FFFFFF',
+    green: '#54ffb5',
 
     brandLight: '#F17B0B',
     brandMid: '#BC5F09',
