@@ -85,11 +85,6 @@ export function Home() {
       await saveLastSyncTimestamp()
       await fetchHistoric()
       setPercentageToSync(null)
-
-      // Toast.show({
-      //   type: 'info',
-      //   text2: '☁ Todos os dados estão sincronizados...',
-      // })
     }
 
     if (percentage < 100) {
