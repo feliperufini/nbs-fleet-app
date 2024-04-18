@@ -6,6 +6,7 @@ import { useTheme } from 'styled-components/native'
 export type HistoricCardProps = {
   id: string
   licensePlate: string
+  description: string
   createdAt: string
   isSync: boolean
 }

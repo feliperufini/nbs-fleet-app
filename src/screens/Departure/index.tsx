@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
-import { TextInput, ScrollView, Alert } from 'react-native'
+import { TextInput, ScrollView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Toast from 'react-native-toast-message'
 
 import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
@@ -29,11 +30,19 @@ export function Departure() {
   function handleDepartureRegister() {
     try {
       if (!validateLicensePlate(licensePlate)) {
-        return Alert.alert('Placa do veículo', 'A placa é inválida, por favor, informe uma placa correta.')
+        return Toast.show({
+          type: 'error',
+          text1: 'Placa do veículo',
+          text2: 'A placa é inválida, por favor, informe uma placa correta.'
+        })
       }
 
       if (description.trim().length === 0) {
-        return Alert.alert('Finalidade', 'Por favor, informe a finalidade da utilização do veículo.')
+        return Toast.show({
+          type: 'error',
+          text1: 'Finalidade',
+          text2: 'Por favor, informe a finalidade da utilização do veículo.'
+        })
       }
 
       setIsRegistering(true)
@@ -46,11 +55,19 @@ export function Departure() {
         }))
       })
 
-      Alert.alert('Saída', 'Saída do veículo registrada com sucesso.')
+      Toast.show({
+        type: 'success',
+        text1: 'Saída',
+        text2: 'Saída do veículo registrada com sucesso.'
+      })
       goBack()
     } catch (error) {
       console.log(error)
-      Alert.alert('Erro', 'Não foi possível registrar a saída do veículo.')
+      Toast.show({
+        type: 'error',
+        text1: 'Erro',
+        text2: 'Não foi possível registrar a saída do veículo.'
+      })
     }
     setIsRegistering(false)
   }
