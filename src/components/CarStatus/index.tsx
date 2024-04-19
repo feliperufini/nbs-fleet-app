@@ -8,7 +8,7 @@ type Props = TouchableOpacityProps & {
 }
 
 export function CarStatus({ licensePlate = null, ...rest }: Props) {
-  const theme = useTheme()
+  const { colors } = useTheme()
 
   const Icon = licensePlate ? Flag : Car
   const message = licensePlate
@@ -21,7 +21,7 @@ export function CarStatus({ licensePlate = null, ...rest }: Props) {
   return (
     <Container {...rest}>
       <IconBox>
-        <Icon size={52} color={theme.colors.brandMid} />
+        <Icon size={52} color={colors.brandMid} />
       </IconBox>
       <Message>
         {message}

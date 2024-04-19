@@ -61,6 +61,14 @@ export function Departure() {
         })
       }
 
+      if (!currentCoords?.latitude || !currentCoords?.longitude) {
+        return Toast.show({
+          type: 'error',
+          text1: 'localização',
+          text2: 'Não foi possível obter a localização atual.'
+        })
+      }
+
       setIsRegistering(true)
 
       realm.write(() => {
