@@ -8,7 +8,7 @@ export const Container = styled.TouchableOpacity`
   border-radius: 6px;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.colors.brandMid};
+  background-color: ${theme.colors.brandDark};
 `
 
 export const Title = styled.Text`
@@ -18,5 +18,5 @@ export const Title = styled.Text`
 `
 
 export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
-  color: theme.colors.brandLight,
+  color: theme.colors.brandMid,
 }))``

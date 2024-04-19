@@ -5,8 +5,9 @@ export default {
     red: '#ff5454',
     teal: '#54ffff',
 
-    brandLight: '#F17B0B',
-    brandMid: '#BC5F09',
+    brandLight: '#FC9B51',
+    brandMid: '#F17B0B',
+    brandDark: '#BC5F09',
 
     gray: {
       100: '#E1E1E6',

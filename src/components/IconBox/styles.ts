@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native'
 import theme from '../../theme'
 
-export type SizeProps = 'SMALL' | 'MEDIUM'
+export type SizeProps = 'sm' | 'md'
 
 type Props = {
   size: SizeProps,
@@ -9,11 +9,11 @@ type Props = {
 
 const variantSizeStyles = (size: SizeProps) => {
   return {
-    SMALL: css`
+    sm: css`
       width: 32px;
       height: 32px;
     `,
-    MEDIUM: css`
+    md: css`
       width: 46px;
       height: 46px;
     `

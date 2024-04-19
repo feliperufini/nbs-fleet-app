@@ -9,7 +9,7 @@ export const Container = styled.ImageBackground`
 `
 
 export const Title = styled.Text`
-  color: ${theme.colors.brandLight};
+  color: ${theme.colors.brandMid};
   font-size: ${theme.fontSize.xxxl};
   font-family: ${theme.fontFamily.bold};
   text-align: center;

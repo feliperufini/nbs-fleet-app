@@ -16,7 +16,7 @@ export function ButtonIcon({ icon: Icon, ...rest }: Props) {
     <Container activeOpacity={0.7} {...rest}>
       <Icon
         size={24}
-        color={colors.brandMid}
+        color={colors.brandDark}
       />
     </Container>
   )

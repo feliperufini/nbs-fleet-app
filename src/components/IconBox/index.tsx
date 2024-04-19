@@ -9,16 +9,16 @@ type Props = {
   icon: IconBoxProps
 }
 
-export function IconBox({ size = 'MEDIUM', icon: Icon }: Props) {
+export function IconBox({ size = 'md', icon: Icon }: Props) {
   const { colors } = useTheme()
 
-  const iconSize = size === 'MEDIUM' ? 24 : 16
+  const iconSize = size === 'md' ? 24 : 16
 
   return (
     <Container size={size}>
       <Icon
         size={iconSize}
-        color={colors.brandLight}
+        color={colors.brandMid}
       />
     </Container>
   )

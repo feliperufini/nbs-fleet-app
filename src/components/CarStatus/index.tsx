@@ -21,7 +21,7 @@ export function CarStatus({ licensePlate = null, ...rest }: Props) {
   return (
     <Container {...rest}>
       <IconBox>
-        <Icon size={52} color={theme.colors.brandLight} />
+        <Icon size={52} color={theme.colors.brandMid} />
       </IconBox>
       <Message>
         {message}

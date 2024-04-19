@@ -31,7 +31,7 @@ export const Message = styled.Text`
 `
 
 export const TextHighlight = styled.Text`
-  color: ${theme.colors.brandLight};
+  color: ${theme.colors.brandMid};
   font-size: ${theme.fontSize.sm};
   font-family: ${theme.fontFamily.bold};
 `

@@ -3,6 +3,7 @@ import { TextInput, ScrollView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   LocationAccuracy,
+  LocationObjectCoords,
   LocationSubscription,
   useForegroundPermissions,
   watchPositionAsync
@@ -24,6 +25,7 @@ import { useUser } from '@realm/react'
 import { useRealm } from '../../libs/realm'
 import { Historic } from '../../libs/realm/schemas/Historic'
 import { LocationInfo } from '../../components/LocationInfo'
+import { Map } from '../../components/Map'
 
 export function Departure() {
   const [description, setDescription] = useState('')
@@ -31,6 +33,7 @@ export function Departure() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [isLoadingLocation, setIsLoadingLocation] = useState(true)
   const [currentAddress, setCurrentAddress] = useState<string | null>(null)
+  const [currentCoords, setCurrentCoords] = useState<LocationObjectCoords | null>(null)
 
   const [locationForegroundPermission, requestLocationForegroundPermission] = useForegroundPermissions()
 
@@ -100,6 +103,8 @@ export function Departure() {
       accuracy: LocationAccuracy.High,
       timeInterval: 1000
     }, (location) => {
+      setCurrentCoords(location.coords)
+
       getAddressLocation(location.coords)
         .then((address) => {
           if (address) {
@@ -141,6 +146,14 @@ export function Departure() {
       <Header title="Saída" />
       <KeyboardAwareScrollView extraHeight={100}>
         <ScrollView>
+          {
+            currentCoords && (
+              <Map coordinates={[
+                currentCoords,
+                { latitude: -10.8842, longitude: -61.9491 }
+              ]} />
+            )
+          }
           <Content>
             {
               currentAddress && (

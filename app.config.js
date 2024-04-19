@@ -1,4 +1,8 @@
-{
+import * as dotenv from 'dotenv'
+
+dotenv.config()
+
+module.exports = {
   "expo": {
     "name": "nbs-fleet-app",
     "slug": "nbs-fleet-app",
@@ -15,14 +19,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": process.env.GOOGLE_MAPS_API
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#202024"
       },
-      "package": "com.felsky.nbsfleet"
+      "package": "com.felsky.nbsfleet",
+      "config": {
+        "googleMaps": {
+          "apiKey": process.env.GOOGLE_MAPS_API
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
