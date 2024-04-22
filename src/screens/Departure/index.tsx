@@ -5,27 +5,29 @@ import {
   LocationAccuracy,
   LocationObjectCoords,
   LocationSubscription,
+  requestBackgroundPermissionsAsync,
   useForegroundPermissions,
   watchPositionAsync
 } from 'expo-location'
 import { useNavigation } from '@react-navigation/native'
+import { useUser } from '@realm/react'
 import { Car } from 'phosphor-react-native'
 import Toast from 'react-native-toast-message'
 
+import { Container, Content, Message } from './styles'
 import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { LicensePlateInput } from '../../components/LicensePlateInput'
 import { TextAreaInput } from '../../components/TextAreaInput'
+import { LocationInfo } from '../../components/LocationInfo'
 import { Loading } from '../../components/Loading'
+import { Map } from '../../components/Map'
 
-import { Container, Content, Message } from './styles'
 import { getAddressLocation, validateLicensePlate } from '../../utils/helper'
+import { startLocationTask } from '../../tasks/backgroundLocationTask'
 
-import { useUser } from '@realm/react'
 import { useRealm } from '../../libs/realm'
 import { Historic } from '../../libs/realm/schemas/Historic'
-import { LocationInfo } from '../../components/LocationInfo'
-import { Map } from '../../components/Map'
 
 export function Departure() {
   const [description, setDescription] = useState('')
@@ -43,7 +45,7 @@ export function Departure() {
 
   const descriptionRef = useRef<TextInput>(null)
 
-  function handleDepartureRegister() {
+  async function handleDepartureRegister() {
     try {
       if (!validateLicensePlate(licensePlate)) {
         return Toast.show({
@@ -70,6 +72,20 @@ export function Departure() {
       }
 
       setIsRegistering(true)
+
+      const backgroundPermissions = await requestBackgroundPermissionsAsync()
+
+      if (!backgroundPermissions.granted) {
+        setIsRegistering(false)
+
+        return Toast.show({
+          type: 'error',
+          text1: 'Localização',
+          text2: 'É necessário permitir que o app tenha acesso à localização em segundo plano.'
+        })
+      }
+
+      await startLocationTask()
 
       realm.write(() => {
         realm.create('Historic', Historic.generate({
