@@ -13,6 +13,7 @@ import { BSON } from 'realm'
 import { useObject, useRealm } from '../../libs/realm'
 import { Historic } from '../../libs/realm/schemas/Historic'
 import { getLastAsyncTimestamp } from '../../libs/asyncStorage/syncStorage'
+import { stopLocationTask } from '../../tasks/backgroundLocationTask'
 
 type RouteParamsProps = {
   id: string
@@ -47,7 +48,7 @@ export function Arrival() {
     goBack()
   }
 
-  function handleArrivalRegister() {
+  async function handleArrivalRegister() {
     try {
       if (!historic) {
         return Toast.show({
@@ -61,6 +62,8 @@ export function Arrival() {
         historic.status = 'arrival'
         historic.updated_at = new Date()
       })
+
+      await stopLocationTask()
 
       Toast.show({
         type: 'success',
