@@ -172,10 +172,7 @@ export function Departure() {
         <ScrollView>
           {
             currentCoords && (
-              <Map coordinates={[
-                currentCoords,
-                { latitude: -10.8842, longitude: -61.9491 }
-              ]} />
+              <Map coordinates={[currentCoords]} />
             )
           }
           <Content>

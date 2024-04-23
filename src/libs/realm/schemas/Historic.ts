@@ -1,6 +1,6 @@
 import { Realm } from '@realm/react'
 
-type GenerateProps = {
+type HistoricSchemaProps = {
   user_id: string
   license_plate: string
   description: string
@@ -15,7 +15,7 @@ export class Historic extends Realm.Object<Historic> {
   created_at!: Date
   updated_at!: Date
 
-  static generate({ user_id, license_plate, description }: GenerateProps) {
+  static generate({ user_id, license_plate, description }: HistoricSchemaProps) {
     return {
       _id: new Realm.BSON.UUID(),
       user_id,
@@ -29,10 +29,14 @@ export class Historic extends Realm.Object<Historic> {
 
   static schema = {
     name: 'Historic',
-    primaryKey: '_id',
+    primaryKey: '_id' as const,
     properties: {
       _id: 'uuid',
-      user_id: { type: 'string', indexed: true },
+      user_id: 'string',
+      // user_id: {
+      //   type: 'string',
+      //   indexed: true
+      // },
       license_plate: 'string',
       description: 'string',
       status: 'string',
