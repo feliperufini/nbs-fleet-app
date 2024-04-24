@@ -1,17 +1,17 @@
 import { Realm } from '@realm/react'
 
-export type CoordsSchemaProps = {
+export type CoordinatesSchemaProps = {
   latitude: number
   longitude: number
   timestamp: number
 }
 
-export class Coords extends Realm.Object<Coords> {
+export class Coordinates extends Realm.Object<Coordinates> {
   latitude!: number
   longitude!: number
   timestamp!: number
 
-  static generate({ latitude, longitude, timestamp }: CoordsSchemaProps) {
+  static generate({ latitude, longitude, timestamp }: CoordinatesSchemaProps) {
     return {
       latitude,
       longitude,
@@ -20,7 +20,7 @@ export class Coords extends Realm.Object<Coords> {
   }
 
   static schema = {
-    name: 'Coords',
+    name: 'Coordinates',
     embedded: true,
     properties: {
       latitude: 'float',

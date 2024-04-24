@@ -35,7 +35,7 @@ export function Departure() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [isLoadingLocation, setIsLoadingLocation] = useState(true)
   const [currentAddress, setCurrentAddress] = useState<string | null>(null)
-  const [currentCoords, setCurrentCoords] = useState<LocationObjectCoords | null>(null)
+  const [currentCoordinates, setCurrentCoordinates] = useState<LocationObjectCoords | null>(null)
 
   const [locationForegroundPermission, requestLocationForegroundPermission] = useForegroundPermissions()
 
@@ -63,7 +63,7 @@ export function Departure() {
         })
       }
 
-      if (!currentCoords?.latitude || !currentCoords?.longitude) {
+      if (!currentCoordinates?.latitude || !currentCoordinates?.longitude) {
         return Toast.show({
           type: 'error',
           text1: 'localização',
@@ -92,6 +92,11 @@ export function Departure() {
           user_id: user!.id,
           license_plate: licensePlate,
           description: description,
+          coordinates: [{
+            latitude: currentCoordinates.latitude,
+            longitude: currentCoordinates.longitude,
+            timestamp: new Date().getTime()
+          }]
         }))
       })
 
@@ -127,7 +132,7 @@ export function Departure() {
       accuracy: LocationAccuracy.High,
       timeInterval: 1000
     }, (location) => {
-      setCurrentCoords(location.coords)
+      setCurrentCoordinates(location.coords)
 
       getAddressLocation(location.coords)
         .then((address) => {
@@ -171,8 +176,8 @@ export function Departure() {
       <KeyboardAwareScrollView extraHeight={100}>
         <ScrollView>
           {
-            currentCoords && (
-              <Map coordinates={[currentCoords]} />
+            currentCoordinates && (
+              <Map coordinates={[currentCoordinates]} />
             )
           }
           <Content>
