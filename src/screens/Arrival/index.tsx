@@ -3,22 +3,22 @@ import { Alert } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { X } from 'phosphor-react-native'
 import { LatLng } from 'react-native-maps'
+import { BSON } from 'realm'
 import Toast from 'react-native-toast-message'
 
 import { AsyncMessage, Container, Content, Description, Footer, Label, LicensePlate } from './styles'
 import { Header } from '../../components/Header'
 import { Button } from '../../components/Button'
 import { ButtonIcon } from '../../components/ButtonIcon'
+import { Map } from '../../components/Map'
 
-import { BSON } from 'realm'
 import { useObject, useRealm } from '../../libs/realm'
 import { Historic } from '../../libs/realm/schemas/Historic'
 import { getLastAsyncTimestamp } from '../../libs/asyncStorage/syncStorage'
 import { getStorageLocations } from '../../libs/asyncStorage/locationStorage'
 import { stopLocationTask } from '../../tasks/backgroundLocationTask'
-import { Map } from '../../components/Map'
 
-type RouteParamsProps = {
+type RouteParamProps = {
   id: string
 }
 
@@ -27,7 +27,7 @@ export function Arrival() {
   const [coordinates, setCoordinates] = useState<LatLng[]>([])
 
   const route = useRoute()
-  const { id } = route.params as RouteParamsProps
+  const { id } = route.params as RouteParamProps
 
   const { goBack } = useNavigation()
   const realm = useRealm()
@@ -63,9 +63,12 @@ export function Arrival() {
         })
       }
 
+      const locations = await getStorageLocations()
+
       realm.write(() => {
         historic.status = 'arrival'
         historic.updated_at = new Date()
+        historic.coordinates.push(...locations)
       })
 
       await stopLocationTask()
@@ -81,7 +84,7 @@ export function Arrival() {
       Toast.show({
         type: 'error',
         text1: 'Erro',
-        text2: 'Não foi possível registrar a saída do veículo.'
+        text2: 'Não foi possível registrar a chegada do veículo.'
       })
     }
   }
@@ -95,8 +98,18 @@ export function Arrival() {
     const updatedAt = historic!.updated_at.getTime()
     setDataNotSynced(updatedAt > lastSync)
 
-    const locationsStorage = await getStorageLocations()
-    setCoordinates(locationsStorage)
+    if (historic?.status === 'departure') {
+      const locationsStorage = await getStorageLocations()
+      setCoordinates(locationsStorage)
+    } else {
+      const newCoordinates = historic?.coordinates.map(item => ({
+        latitude: Number(item.latitude.toFixed(7)),
+        longitude: Number(item.longitude.toFixed(7)),
+        timestamp: item.timestamp
+      }))
+
+      setCoordinates(newCoordinates ?? [])
+    }
   }
 
   useEffect(() => {
@@ -108,7 +121,7 @@ export function Arrival() {
       <Header title={title} />
       {
         coordinates.length > 0 &&
-        <Map coordinates={coordinates} />
+        < Map coordinates={coordinates} />
       }
       <Content>
         <Label>Placa do veículo</Label>
