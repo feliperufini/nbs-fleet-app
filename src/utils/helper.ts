@@ -1,4 +1,4 @@
-import { LocationObjectCoords, reverseGeocodeAsync } from 'expo-location'
+import { reverseGeocodeAsync } from 'expo-location'
 
 const LICENSE_PLATE_REGEX = '[A-Z]{3}[0-9][0-9A-Z][0-9]{2}'
 
@@ -6,7 +6,12 @@ export const validateLicensePlate = (licensePlate: string) => {
   return licensePlate.toUpperCase().match(LICENSE_PLATE_REGEX)
 }
 
-export async function getAddressLocation({ latitude, longitude }: LocationObjectCoords) {
+type Props = {
+  latitude: number
+  longitude: number
+}
+
+export async function getAddressLocation({ latitude, longitude }: Props) {
   try {
     const addressResponse = await reverseGeocodeAsync({ latitude, longitude })
 
