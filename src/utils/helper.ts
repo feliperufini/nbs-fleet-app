@@ -1,4 +1,5 @@
 import { reverseGeocodeAsync } from 'expo-location'
+import { Linking, Platform } from 'react-native'
 
 const LICENSE_PLATE_REGEX = '[A-Z]{3}[0-9][0-9A-Z][0-9]{2}'
 
@@ -15,22 +16,17 @@ export async function getAddressLocation({ latitude, longitude }: Props) {
   try {
     const addressResponse = await reverseGeocodeAsync({ latitude, longitude })
 
-    // addressResponse[0] = {
-    //   city: null,
-    //   country: "Brazil",
-    //   district: "Bairro Centro",
-    //   formattedAddress: "R. Pedro Teixeira, 1414 - Bairro Centro, Ji-Paraná - RO, 76900-062, Brazil",
-    //   isoCountryCode: "BR",
-    //   name: "1414",
-    //   postalCode: "76900-062",
-    //   region: "Rondônia",
-    //   street: "Rua Pedro Teixeira",
-    //   streetNumber: "1414",
-    //   subregion: "Ji-Paraná",
-    //   timezone: null
-    // }
     return addressResponse[0]?.formattedAddress
   } catch (error) {
     console.log(error)
+  }
+}
+
+export async function openSettings() {
+  if (Platform.OS === 'ios') {
+    return Linking.openURL('app-settings:')
+  }
+  if (Platform.OS === 'android') {
+    return Linking.openSettings()
   }
 }

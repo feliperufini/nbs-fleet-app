@@ -14,7 +14,7 @@ import { useUser } from '@realm/react'
 import { Car } from 'phosphor-react-native'
 import Toast from 'react-native-toast-message'
 
-import { Container, Content, Message } from './styles'
+import { Container, Content, Message, MessageContent } from './styles'
 import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { LicensePlateInput } from '../../components/LicensePlateInput'
@@ -23,7 +23,7 @@ import { LocationInfo } from '../../components/LocationInfo'
 import { Loading } from '../../components/Loading'
 import { Map } from '../../components/Map'
 
-import { getAddressLocation, validateLicensePlate } from '../../utils/helper'
+import { getAddressLocation, openSettings, validateLicensePlate } from '../../utils/helper'
 import { startLocationTask } from '../../tasks/backgroundLocationTask'
 
 import { useRealm } from '../../libs/realm'
@@ -159,9 +159,12 @@ export function Departure() {
     return (
       <Container>
         <Header title="Saída" />
-        <Message>
-          Você precisa fornecer as permissões de localização para acessar essa funcionalidade. Acesse as configuraçõse do seu dispositivo para habilitar essa permissão.
-        </Message>
+        <MessageContent>
+          <Message>
+            Você precisa fornecer as permissões de localização para acessar essa funcionalidade. Acesse as configuraçõse do seu dispositivo para habilitar essa permissão.
+          </Message>
+          <Button title="Abrir Configurações" onPress={openSettings} />
+        </MessageContent>
       </Container>
     )
   }

@@ -61,7 +61,16 @@ export function Arrival() {
     goBack()
   }
 
-  async function handleArrivalRegister() {
+  function handleConfirmArrivalRegister() {
+    Alert.alert('Registrar Chegada', 'Deseja realmente registrar a chegada do veículo?',
+      [
+        { text: 'Não', style: 'cancel' },
+        { text: 'Sim', onPress: () => arrivalRegister() },
+      ]
+    )
+  }
+
+  async function arrivalRegister() {
     try {
       if (!historic) {
         return Toast.show({
@@ -172,7 +181,7 @@ export function Arrival() {
       {historic?.status === 'departure' &&
         <Footer>
           <ButtonIcon icon={X} onPress={handleRemoveVehicleUsage} />
-          <Button title="Registrar Chegada" onPress={handleArrivalRegister} />
+          <Button title="Registrar Chegada" onPress={handleConfirmArrivalRegister} />
         </Footer>
       }
       {
